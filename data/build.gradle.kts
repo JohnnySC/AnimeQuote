@@ -4,6 +4,7 @@ plugins {
 dependencies {
     implementation(project(":domain"))
 
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(group = "javax.inject", name = "javax.inject", version = "1")
+    api("com.squareup.retrofit2:retrofit:2.9.0")
+    api("com.squareup.retrofit2:converter-gson:2.9.0")
 }
