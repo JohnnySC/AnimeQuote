@@ -8,24 +8,27 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import ru.easycode.domain.LoadQuoteResult
 import ru.easycode.domain.Repository
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: Repository,
+    private val mapper: LoadQuoteResult.Mapper<QuoteUiState>
 ) : ViewModel() {
 
-    private val innerLiveData = MutableLiveData<String>()
-    val liveData: LiveData<String>
+    private val innerLiveData = MutableLiveData<QuoteUiState>()
+    val liveData: LiveData<QuoteUiState>
         get() = innerLiveData
 
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     fun load() {
         viewModelScope.launch {
-            val quote = repository.loadQuote().second
-            innerLiveData.value = quote
+            val quoteResult: LoadQuoteResult = repository.loadQuote()
+            val uiState: QuoteUiState = quoteResult.map(mapper)
+            innerLiveData.value = uiState
         }
     }
 }

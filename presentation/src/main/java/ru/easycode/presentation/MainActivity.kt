@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel.liveData.observe(this) {
-            binding.mainTextView.text = it
+            it.show(binding.mainTextView)
         }
 
         viewModel.load()

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="ru.easycode.presentation.MainActivity">
 
-    <TextView
+    <ru.easycode.presentation.QuoteTextView
         android:id="@+id/mainTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

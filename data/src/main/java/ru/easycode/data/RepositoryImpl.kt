@@ -1,5 +1,6 @@
 package ru.easycode.data
 
+import ru.easycode.domain.LoadQuoteResult
 import ru.easycode.domain.Repository
 import javax.inject.Inject
 
@@ -7,12 +8,12 @@ class RepositoryImpl @Inject constructor(
     private val service: AnimeQuoteService
 ) : Repository {
 
-    override suspend fun loadQuote(): Pair<Boolean, String> {
+    override suspend fun loadQuote(): LoadQuoteResult {
         return try {
             val quote = service.animeQuote().quote
-            Pair(true, quote)
+            LoadQuoteResult.Success(quote)
         } catch (e: Exception) {
-            Pair(false, e.message ?: "error")
+            LoadQuoteResult.Error(e.message ?: "error")
         }
     }
 }
